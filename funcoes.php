@@ -4,7 +4,7 @@ include_once "variaveis.php";
 
 
 //======[ Facilita a criação de select]
-function select($sql)
+function select($sql,$variaveis)
 {
 
 global $Servidor, $Usuario,$Senha , $Banco;
@@ -15,6 +15,23 @@ $conn = new mysqli($Servidor, $Usuario,$Senha , $Banco);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
+
+
+//Fazer Correção das variáveis e montar código
+
+$i=0;
+while ($i<count($variaveis))
+{
+   if (is_string($variaveis[$i]))
+   {
+      $variaveis[$i]=mysqli_real_escape_string($conn,$variaveis[$i]);
+   }
+
+   $sql = str_replace('['.'v'.$i.']', $variaveis[$i], $sql);
+
+   $i++;
+}
+
 
 $result = $conn->query($sql);
 
@@ -34,7 +51,7 @@ return $saida;
 }
 
 
-function insert($sql)
+function in_up($sql,$variaveis)
 {
    global $Servidor, $Usuario,$Senha , $Banco;
 
@@ -44,6 +61,22 @@ $conn = new mysqli($Servidor, $Usuario,$Senha , $Banco);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
+
+//Fazer Correção das variáveis e montar código
+
+$i=0;
+while ($i<count($variaveis))
+{
+   if (is_string($variaveis[$i]))
+   {
+      $variaveis[$i]=mysqli_real_escape_string($conn,$variaveis[$i]);
+   }
+
+   // Fornece: <body text='black'>
+   $sql = str_replace('['.'v'.$i.']', $variaveis[$i], $sql);
+
+   $i++;
+}
 
 
 
@@ -62,7 +95,7 @@ return $saida;
 
 function buscarUrl($chave)
 {
-   $r = select("SELECT url FROM chaves WHERE upper(chave) = upper('$chave')");
+   $r = select("SELECT url FROM chaves WHERE upper(chave) = upper('[v0]')",[$chave]);
    if (count($r)===0)
    {
       return "";

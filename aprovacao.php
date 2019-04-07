@@ -5,12 +5,12 @@ include_once "funcoes.php";
 if(@$_GET['md5']==md5(@$_GET['id'].$secreto))
 {
     $id = $_GET['id'];
-    $sql="UPDATE chaves SET ativo=1,ativado_em=NOW() WHERE id = $id";
-    insert($sql);
+    $sql="UPDATE chaves SET ativo=1,ativado_em=NOW() WHERE id = [v0]";
+    in_up($sql,[$id]);
 
-    $sql = "SELECT  url, chave FROM chaves WHERE id = $id";
+    $sql = "SELECT  url, chave FROM chaves WHERE id = [v0]";
 
-    $busca = select($sql);
+    $busca = select($sql,[$id]);
 
 }
 else

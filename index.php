@@ -60,7 +60,7 @@ if((@$_POST["url"]!="")||(@$_POST["chave"]!="")||(@$_POST["email"]!=""))
         //Criar a chave
         if ($chave=="")
         {   
-            $ch_int = select("SELECT MAX(chave_int) as maior FROM chaves");
+            $ch_int = select("SELECT MAX(chave_int) as maior FROM chaves",[]);
             $ch_int = $ch_int[0]['maior'];
 
 
@@ -90,15 +90,15 @@ if((@$_POST["url"]!="")||(@$_POST["chave"]!="")||(@$_POST["email"]!=""))
              `ativo`, 
              `criado_em`
              ) VALUES (
-            '$url',
-            '$chave',
-            $ch_int,
-            '$email',
+            '[v0]',
+            '[v1]',
+             [v2],
+            '[v3]',
             0,
             NOW()
             )";
 
-          $id = insert($sql);
+          $id = in_up($sql,[$url,$chave,$ch_int,$email]);
 
           if ($id!=null)
           {

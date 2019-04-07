@@ -10,12 +10,12 @@ if(strpos($chave,"?")!==false)
 $chave = substr($chave,0,strpos($chave,"?"));
 }
 
-$sql = "SELECT url FROM chaves WHERE upper(chave) = upper('$chave') AND ativo = 1";
+$sql = "SELECT url FROM chaves WHERE upper(chave) = upper('[v0]') AND ativo = 1";
 
 
 $url="";
 
-$busca = select($sql);
+$busca = select($sql,[$chave]);
 
 if(count($busca)!=0)
 {
@@ -36,12 +36,8 @@ if ($url=="")
 
 
 $ip = $_SERVER["REMOTE_ADDR"];
+$navegador = $_SERVER['HTTP_USER_AGENT'];
 
-
-global $Servidor, $Usuario,$Senha , $Banco;
-$conn = new mysqli($Servidor, $Usuario,$Senha , $Banco);
-$navegador = mysqli_real_escape_string($conn,$_SERVER['HTTP_USER_AGENT']);
-$conn->close();
 
 $sql="
 INSERT INTO acessos(
@@ -51,14 +47,14 @@ ip,
 acesso_em,
 navegador
 ) VALUES (
-'$url',
-'$chave',
-'$ip',
+'[v0]',
+'[v1]',
+'[v2]',
 NOW(),
-'$navegador')
+'[v3]')
 ";
 
-insert($sql);
+in_up($sql,[$url,$chave,$ip,$navegador]);
 
 
 if ($url=="")

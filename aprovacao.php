@@ -5,7 +5,7 @@ include_once "funcoes.php";
 
 //====== Registras acesso
 $link = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-$chave = substr($link,strlen($site)+1);
+$chave_url = substr($link,strlen($site)+1);
 $ip = $_SERVER["REMOTE_ADDR"];
 $navegador = $_SERVER['HTTP_USER_AGENT'];
 
@@ -17,17 +17,21 @@ chave,
 ip,
 acesso_em,
 navegador,
-sessao
+sessao,
+origem
 ) VALUES (
 '[v0]',
 '[v1]',
 '[v2]',
 NOW(),
 '[v3]',
-'[v4]')
+'[v4]',
+'[v5]')
 ";
 
-in_up($sql,["",$chave,$ip,$navegador,sessao()]);
+
+
+in_up($sql,["",$chave_url,$ip,$navegador,sessao(),@$_SERVER['HTTP_REFERER']]);
 
 //=====Registrar acesso da index.php
 

@@ -3,11 +3,11 @@ include_once "variaveis.php";
 include_once "funcoes.php";
 $link = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
-$chave = substr($link,strlen($site)+1);
+$chave_url = substr($link,strlen($site)+1);
 
-if(strpos($chave,"?")!==false)
+if(strpos($chave_url,"?")!==false)
 {
-$chave = substr($chave,0,strpos($chave,"?"));
+    $chave_url = substr($chave_url,0,strpos($chave_url,"?"));
 }
 
 $sql = "SELECT url FROM chaves WHERE upper(chave) = upper('[v0]') AND ativo = 1";
@@ -15,7 +15,7 @@ $sql = "SELECT url FROM chaves WHERE upper(chave) = upper('[v0]') AND ativo = 1"
 
 $url="";
 
-$busca = select($sql,[$chave]);
+$busca = select($sql,[$chave_url]);
 
 if(count($busca)!=0)
 {
@@ -26,10 +26,10 @@ if ($url=="")
 {
    
     
-    if(!(filter_var($chave, FILTER_VALIDATE_URL) === false))
+    if(!(filter_var($chave_url, FILTER_VALIDATE_URL) === false))
     {
-       $url = $chave;
-       $chave = "";
+       $url = $chave_url;
+       $chave_url = "";
     }
 }
 
@@ -46,17 +46,19 @@ chave,
 ip,
 acesso_em,
 navegador,
-sessao
+sessao,
+origem
 ) VALUES (
 '[v0]',
 '[v1]',
 '[v2]',
 NOW(),
 '[v3]',
-'[v4]')
+'[v4]',
+'[v5]')
 ";
 
-in_up($sql,[$url,$chave,$ip,$navegador,sessao()]);
+in_up($sql,[$url,$chave_url,$ip,$navegador,sessao(),@$_SERVER['HTTP_REFERER']]);
 
 
 if ($url=="")

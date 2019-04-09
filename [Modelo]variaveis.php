@@ -26,5 +26,9 @@
 
         //Google Analytics
         $id_Google_Analytics="UA-000000000-0"; 
+
+        //Geolocalização 
+     $geo_api='http://api.ipstack.com/[ip]?access_key=000000000000000000000';
+    
 ?>
 

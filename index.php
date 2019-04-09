@@ -9,8 +9,8 @@ include 'funcoes.php';
 
 
 //====== Registras acesso da index.php
-
-$chave = substr($link,strlen($site)+1);
+$link = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+$chave_url = substr($link,strlen($site)+1);
 $ip = $_SERVER["REMOTE_ADDR"];
 $navegador = $_SERVER['HTTP_USER_AGENT'];
 
@@ -22,28 +22,30 @@ chave,
 ip,
 acesso_em,
 navegador,
-sessao
+sessao,
+origem
 ) VALUES (
 '[v0]',
 '[v1]',
 '[v2]',
 NOW(),
 '[v3]',
-'[v4]')
+'[v4]',
+'[v5]')
 ";
 
-in_up($sql,["",$chave,$ip,$navegador,sessao()]);
+in_up($sql,["",$chave_url,$ip,$navegador,sessao(),@$_SERVER['HTTP_REFERER']]);
 
 //=====Registrar acesso da index.php
 
 
 
-
+$erro=array();
 //verificar se foi enviado algum post
 if(isset($_POST["url"])||isset($_POST["chave"])||isset($_POST["email"]))
 {
     
-    $erro=array();
+   
 
    //Validar dados
 
@@ -91,6 +93,7 @@ if(isset($_POST["url"])||isset($_POST["chave"])||isset($_POST["email"]))
         $erro[]="Essa chave já está sendo utilizada";
     }
 
+
     //verificar caracteres válidos
     if($chave!="")
     {
@@ -109,12 +112,15 @@ if(isset($_POST["url"])||isset($_POST["chave"])||isset($_POST["email"]))
        }
     }
 
+   
+
     $email = @$_POST["email"];
     if(filter_var($email, FILTER_VALIDATE_EMAIL) === FALSE)
     {
         $erro[]="Formato do e-mail não está válido";
     } 
 
+ 
 
         //deu dudo certo criar nova url
     if (count($erro)==0)
@@ -137,6 +143,8 @@ if(isset($_POST["url"])||isset($_POST["chave"])||isset($_POST["email"]))
                 
             }
         }
+
+        
 
        if(!isset($ch_int))
         {
@@ -252,7 +260,8 @@ Equipe e-licencie
             </div>
             <div class="form-row">
                   <span style="color: red;"><?php
-                  global $erro;
+                 
+                 global $erro;
                   
                   $i=0;
                   while ($i < count($erro))

@@ -3,37 +3,8 @@ include_once "variaveis.php";
 include_once "funcoes.php";
 
 
-//====== Registras acesso
-$link = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-$chave_url = substr($link,strlen($site)+1);
-$ip = $_SERVER["REMOTE_ADDR"];
-$navegador = $_SERVER['HTTP_USER_AGENT'];
-
-
-$sql="
-INSERT INTO acessos(
-url,
-chave,
-ip,
-acesso_em,
-navegador,
-sessao,
-origem
-) VALUES (
-'[v0]',
-'[v1]',
-'[v2]',
-NOW(),
-'[v3]',
-'[v4]',
-'[v5]')
-";
-
-
-
-in_up($sql,["",$chave_url,$ip,$navegador,sessao(),@$_SERVER['HTTP_REFERER']]);
-
-//=====Registrar acesso da index.php
+//registrar acess
+acesso('');
 
 
 if(@$_GET['md5']==md5(@$_GET['id'].$secreto))

@@ -29,36 +29,11 @@ if ($url=="")
     if(!(filter_var($chave_url, FILTER_VALIDATE_URL) === false))
     {
        $url = $chave_url;
-       $chave_url = "";
     }
 }
 
-
-
-$ip = $_SERVER["REMOTE_ADDR"];
-$navegador = $_SERVER['HTTP_USER_AGENT'];
-
-
-$sql="
-INSERT INTO acessos(
-url,
-chave,
-ip,
-acesso_em,
-navegador,
-sessao,
-origem
-) VALUES (
-'[v0]',
-'[v1]',
-'[v2]',
-NOW(),
-'[v3]',
-'[v4]',
-'[v5]')
-";
-
-in_up($sql,[$url,$chave_url,$ip,$navegador,sessao(),@$_SERVER['HTTP_REFERER']]);
+ //registrar acesso
+  acesso($url);
 
 
 if ($url=="")

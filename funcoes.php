@@ -183,4 +183,41 @@ function sessao()
   
 }
 
+//registra o acesso
+function acesso($url_)
+{
+
+      global $site;
+
+      $link = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+      $chave_url = substr($link,strlen($site)+1);
+      $ip = $_SERVER["REMOTE_ADDR"];
+      $navegador = $_SERVER['HTTP_USER_AGENT'];
+      $origem = @$_SERVER['HTTP_REFERER'];
+      $sessao = sessao();
+
+
+      $sql="
+      INSERT INTO acessos(
+      url,
+      chave,
+      ip,
+      acesso_em,
+      navegador,
+      sessao,
+      origem
+      ) VALUES (
+      '[v0]',
+      '[v1]',
+      '[v2]',
+      NOW(),
+      '[v3]',
+      '[v4]',
+      '[v5]')
+      ";
+
+      in_up($sql,[$url_,$chave_url,$ip,$navegador,$sessao,$origem]);
+
+}
+
 ?>

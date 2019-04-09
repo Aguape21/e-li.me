@@ -62,6 +62,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
+//correção da codificação
+mysqli_set_charset($conn,"utf8");
+
 //Fazer Correção das variáveis e montar código
 
 $i=0;
@@ -77,7 +80,6 @@ while ($i<count($variaveis))
 
    $i++;
 }
-
 
 
 if ($conn->query($sql) === TRUE) {
@@ -187,7 +189,7 @@ function sessao()
 function acesso($url_)
 {
 
-      global $site;
+      global $site,$geo_api;
 
       $link = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
       $chave_url = substr($link,strlen($site)+1);
@@ -195,6 +197,48 @@ function acesso($url_)
       $navegador = $_SERVER['HTTP_USER_AGENT'];
       $origem = @$_SERVER['HTTP_REFERER'];
       $sessao = sessao();
+
+
+      //acessar geo api
+            // Make and decode POST request:
+            $geo_api_=str_replace('[ip]', $ip, $geo_api);
+            $ch = curl_init($geo_api_);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $data = curl_exec($ch);
+            curl_close($ch);
+
+            $geo_api_ = json_decode($data);
+            
+            $pais='';
+            $regiao='';
+            $cidade='';
+            $latitude=0;
+            $longitude=0;
+
+            if (isset($geo_api_->country_name))
+            {
+                $pais=$geo_api_->country_name;
+            }
+            if (isset($geo_api_->region_name))
+            {
+               $regiao=$geo_api_->region_name;
+            }
+            if (isset($geo_api_->city))
+            {
+               $cidade=$geo_api_->city;
+            }
+            if (isset($geo_api_->latitude))
+            {
+               $latitude=$geo_api_->latitude;
+            }
+            if (isset($geo_api_->longitude))
+            {
+               $longitude=$geo_api_->longitude;
+            }
+
+      //acessar geo api
 
 
       $sql="
@@ -205,7 +249,12 @@ function acesso($url_)
       acesso_em,
       navegador,
       sessao,
-      origem
+      origem,
+      pais,
+      regiao,
+      cidade,
+      latitude,
+      longitude
       ) VALUES (
       '[v0]',
       '[v1]',
@@ -213,10 +262,25 @@ function acesso($url_)
       NOW(),
       '[v3]',
       '[v4]',
-      '[v5]')
-      ";
+      '[v5]',
+      '[v6]',
+      '[v7]',
+      '[v8]',
+       [v9],
+       [v10]
+      )";
 
-      in_up($sql,[$url_,$chave_url,$ip,$navegador,$sessao,$origem]);
+      in_up($sql,[$url_,
+                  $chave_url,
+                  $ip,
+                  $navegador,
+                  $sessao,
+                  $origem,
+                  $pais,
+                  $regiao,
+                  $cidade,
+                  $latitude,
+                  $longitude]);
 
 }
 

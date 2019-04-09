@@ -8,12 +8,42 @@ Página de solicitação de redução de url
 include 'funcoes.php';
 
 //verificar se foi enviado algum post
-if((@$_POST["url"]!="")||(@$_POST["chave"]!="")||(@$_POST["email"]!=""))
+if(isset($_POST["url"])||isset($_POST["chave"])||isset($_POST["email"]))
 {
     
-    $erro=[];
+    $erro=array();
 
    //Validar dados
+
+//===recaptcha
+
+
+
+
+    // Build POST request:
+    $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+    $recaptcha_secret = $chave_secreta;
+    $recaptcha_response = @$_POST['recaptcha_response'];
+
+    // Make and decode POST request:
+    $recaptcha_url = $recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response;
+   
+    $ch = curl_init($recaptcha_url);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $data = curl_exec($ch);
+    curl_close($ch);
+
+    $recaptcha = json_decode($data);
+    
+    // Take action based on the score returned:
+    if (@$recaptcha->score < 0.5) {
+        $erro[]='Olá Robô! Vamos ser amigos?';
+    } 
+//recaptcha
+
+
 
     $url = @$_POST["url"];
 
@@ -151,6 +181,16 @@ Equipe e-licencie
 	<link rel="stylesheet" href="assets/demo.css">
 	<link rel="stylesheet" href="assets/form-basic.css">
 
+    <script src="https://www.google.com/recaptcha/api.js?render=<?php global $chave_site; echo $chave_site; ?>"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('<?php global $chave_site; echo $chave_site; ?>', { action: 'contact' }).then(function (token) {
+                var recaptchaResponse = document.getElementById('recaptchaResponse');
+                recaptchaResponse.value = token;
+            });
+        });
+    </script>
+
 </head>
 
 
@@ -219,6 +259,8 @@ Equipe e-licencie
                 <button type="submit">Reduzir URL</button>
 
             </div>
+
+            <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
 
         </form>
         

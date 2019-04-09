@@ -18,6 +18,11 @@
     //outras valiaveis
     $secreto="PalavraSecreta";
 
+       // Tipo de reCAPTCHA:v3  Chaves de reCAPTCHA
+       // Criar em https://www.google.com/recaptcha
+       $chave_site = 'Sua-Chave-de-Site';
+       $chave_secreta = 'Sua-Chave-Secreta';
+
     
 ?>
 

@@ -1,28 +1,30 @@
 <?php
-    //conexão com banco de dados Mysql
-    $Servidor="localhost";
-    $Banco="Banco_de_Dados";
-    $Usuario="Usuario_Banco_de_Dados";
-    $Senha="Senha";
-
-   
-    //Caracteres para chaves
-    $chave_gerador="0123456789abcdefghijklmnopqrstuvwxyz";
-    $chave_permite="0123456789abcdefghijklmnopqrstuvwxyz-_.@&=+$,/";
-
-    //link
-    $prot="http://";//http:// ou https://
-    $site = "e-li.me"; //Url do site
+        //conexão com banco de dados Mysql
+        $Servidor="localhost";
+        $Banco="Banco_de_Dados";
+        $Usuario="Usuario_Banco_de_Dados";
+        $Senha="Senha";
 
 
-    //outras valiaveis
-    $secreto="PalavraSecreta";
+        //Caracteres para chaves
+        $chave_gerador="0123456789abcdefghijklmnopqrstuvwxyz";
+        $chave_permite="0123456789abcdefghijklmnopqrstuvwxyz-_.@&=+$,/";
 
-       // Tipo de reCAPTCHA:v3  Chaves de reCAPTCHA
-       // Criar em https://www.google.com/recaptcha
-       $chave_site = 'Sua-Chave-de-Site';
-       $chave_secreta = 'Sua-Chave-Secreta';
+        //link
+        $prot="http://";//http:// ou https://
+        $site = "e-li.me"; //Url do site
 
-    
+
+        //outras valiaveis
+        $secreto="PalavraSecreta";
+
+        // Tipo de reCAPTCHA:v3  Chaves de reCAPTCHA
+        // Criar em https://www.google.com/recaptcha
+        $chave_site = 'Sua-Chave-de-Site';
+        $chave_secreta = 'Sua-Chave-Secreta';
+
+
+        //Google Analytics
+        $id_Google_Analytics="UA-000000000-0"; 
 ?>
 

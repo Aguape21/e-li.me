@@ -191,6 +191,17 @@ Equipe e-licencie
         });
     </script>
 
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=<?php global $id_Google_Analytics; echo $id_Google_Analytics; ?>"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '<?php global $id_Google_Analytics; echo $id_Google_Analytics; ?>');
+        </script>
+
+
 </head>
 
 

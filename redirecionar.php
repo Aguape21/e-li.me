@@ -45,16 +45,18 @@ url,
 chave,
 ip,
 acesso_em,
-navegador
+navegador,
+sessao
 ) VALUES (
 '[v0]',
 '[v1]',
 '[v2]',
 NOW(),
-'[v3]')
+'[v3]',
+'[v4]')
 ";
 
-in_up($sql,[$url,$chave,$ip,$navegador]);
+in_up($sql,[$url,$chave,$ip,$navegador,sessao()]);
 
 
 if ($url=="")

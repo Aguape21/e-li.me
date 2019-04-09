@@ -2,11 +2,41 @@
 include_once "variaveis.php";
 include_once "funcoes.php";
 
+
+//====== Registras acesso
+$link = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+$chave = substr($link,strlen($site)+1);
+$ip = $_SERVER["REMOTE_ADDR"];
+$navegador = $_SERVER['HTTP_USER_AGENT'];
+
+
+$sql="
+INSERT INTO acessos(
+url,
+chave,
+ip,
+acesso_em,
+navegador,
+sessao
+) VALUES (
+'[v0]',
+'[v1]',
+'[v2]',
+NOW(),
+'[v3]',
+'[v4]')
+";
+
+in_up($sql,["",$chave,$ip,$navegador,sessao()]);
+
+//=====Registrar acesso da index.php
+
+
 if(@$_GET['md5']==md5(@$_GET['id'].$secreto))
 {
     $id = $_GET['id'];
-    $sql="UPDATE chaves SET ativo=1,ativado_em=NOW() WHERE id = [v0]";
-    in_up($sql,[$id]);
+    $sql="UPDATE chaves SET ativo=1,ativado_em=NOW(),sessao_ativado='[v1]' WHERE id = [v0]";
+    in_up($sql,[$id,sessao()]);
 
     $sql = "SELECT  url, chave FROM chaves WHERE id = [v0]";
 

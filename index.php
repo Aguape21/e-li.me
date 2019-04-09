@@ -7,6 +7,38 @@ Página de solicitação de redução de url
 
 include 'funcoes.php';
 
+
+//====== Registras acesso da index.php
+
+$chave = substr($link,strlen($site)+1);
+$ip = $_SERVER["REMOTE_ADDR"];
+$navegador = $_SERVER['HTTP_USER_AGENT'];
+
+
+$sql="
+INSERT INTO acessos(
+url,
+chave,
+ip,
+acesso_em,
+navegador,
+sessao
+) VALUES (
+'[v0]',
+'[v1]',
+'[v2]',
+NOW(),
+'[v3]',
+'[v4]')
+";
+
+in_up($sql,["",$chave,$ip,$navegador,sessao()]);
+
+//=====Registrar acesso da index.php
+
+
+
+
 //verificar se foi enviado algum post
 if(isset($_POST["url"])||isset($_POST["chave"])||isset($_POST["email"]))
 {
@@ -118,17 +150,19 @@ if(isset($_POST["url"])||isset($_POST["chave"])||isset($_POST["email"]))
              `chave_int`, 
              `email`, 
              `ativo`, 
-             `criado_em`
+             `criado_em`,
+             `sessao_criado`
              ) VALUES (
             '[v0]',
             '[v1]',
              [v2],
             '[v3]',
             0,
-            NOW()
+            NOW(),
+            '[v4]'
             )";
 
-          $id = in_up($sql,[$url,$chave,$ch_int,$email]);
+          $id = in_up($sql,[$url,$chave,$ch_int,$email,sessao()]);
 
           if ($id!=null)
           {

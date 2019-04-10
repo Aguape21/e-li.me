@@ -206,6 +206,7 @@ function acesso($url_)
       $navegador = $_SERVER['HTTP_USER_AGENT'];
       $origem = @$_SERVER['HTTP_REFERER'];
       $sessao = sessao();
+      $server = json_encode($_SERVER);
 
 
       //acessar geo api
@@ -263,7 +264,8 @@ function acesso($url_)
       regiao,
       cidade,
       latitude,
-      longitude
+      longitude,
+      server
       ) VALUES (
       '[v0]',
       '[v1]',
@@ -276,7 +278,8 @@ function acesso($url_)
       '[v7]',
       '[v8]',
        [v9],
-       [v10]
+       [v10],
+       '[v11]'
       )";
 
       in_up($sql,[$url_,
@@ -289,7 +292,8 @@ function acesso($url_)
                   $regiao,
                   $cidade,
                   $latitude,
-                  $longitude]);
+                  $longitude,
+                  $server]);
 
 }
 

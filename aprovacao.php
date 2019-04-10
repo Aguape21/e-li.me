@@ -9,6 +9,21 @@ acesso('');
 
 if(@$_GET['md5']==md5(@$_GET['id'].$secreto))
 {
+   
+    //abrir relatório se já estiver ativado
+    $ativo = select("SELECT ativo FROM `chaves` where id = [v0]",
+                    [$_GET['id']]);
+
+    $ativo = $ativo[0]['ativo'];
+
+    if ($ativo==1)
+    {
+        include 'relatorio.php';
+        exit;
+    }
+
+
+   
     $id = $_GET['id'];
     $sql="UPDATE chaves SET ativo=1,ativado_em=NOW(),sessao_ativado='[v1]' WHERE id = [v0]";
     in_up($sql,[$id,sessao()]);

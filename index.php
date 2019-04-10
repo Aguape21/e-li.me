@@ -162,18 +162,26 @@ if(isset($_POST["url"])||isset($_POST["chave"])||isset($_POST["email"]))
 "
 Olá!
 
-Clique no link abaixo para aprovar a criação da URL curta para $url.
+Clique no link abaixo para aprovar a criação ou ver relatório de acessos da URL curta para $url.
 
 Caso não tenha feito nenhuma solicitação, desconsiderar essa mensagem.
 
-Aprovar aqui << $prot$site/aprovacao.php?id=$id&md5=$md5  >>.
+Aprovar ou ver relatório aqui << $prot$site/aprovacao.php?id=$id&md5=$md5  >>.
 
 Att,
 Equipe e-licencie 
 
 ";
 
-              mail($email, 'Aprovação de URL curta', $corpo);
+
+                $headers = "MIME-Version: 1.1\r\n";
+                $headers .= "Content-type: text/plain; charset=UTF-8\r\n";
+                $headers .= "From: $meu_email\r\n"; // remetente
+                $headers .= "Return-Path: $meu_email\r\n"; // return-path
+                
+
+
+              mail($email, 'Aprovação de URL curta', $corpo,$headers);
 
 
             $mensagem="Foi ao e-mail $email um link para aprovação!";

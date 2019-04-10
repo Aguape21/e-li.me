@@ -25,6 +25,10 @@
 
         //Geolocalização 
      $geo_api='http://api.ipstack.com/[ip]?access_key=000000000000000000000';
+
+         //E-mail de envio
+         $meu_email = 'nao-responda@site.com';
+
     
 ?>
 

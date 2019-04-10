@@ -20,6 +20,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
+//correção da codificação
+mysqli_set_charset($conn,"utf8");
 
 //Fazer Correção das variáveis e montar código
 
@@ -37,6 +39,7 @@ while ($i<count($variaveis))
 }
 
 
+
 $result = $conn->query($sql);
 
 $saida=[];
@@ -49,6 +52,9 @@ if ($result->num_rows > 0)
     }
 } 
 $conn->close();
+
+
+
 
 return $saida;
 
@@ -84,7 +90,6 @@ while ($i<count($variaveis))
 
    $i++;
 }
-
 
 if ($conn->query($sql) === TRUE) {
    $saida = $conn->insert_id;

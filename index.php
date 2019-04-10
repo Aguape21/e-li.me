@@ -58,6 +58,13 @@ if(isset($_POST["url"])||isset($_POST["chave"])||isset($_POST["email"]))
        $erro[]="Formato da URL não está válido";
     }
  
+    //Impedir que se tente reduzir um link do próprio site
+    if(strpos($url,$site)!==false)
+    {
+        $erro[]="A url não pode conter ".$site;
+    }
+
+
     $chave = @$_POST["chave"];
 
     if (($chave!="") && (buscarUrl($chave)!=""))

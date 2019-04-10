@@ -2,6 +2,10 @@
 
 include_once "variaveis.php";
 
+    //Caracteres para chaves
+    $chave_gerador="0123456789abcdefghijklmnopqrstuvwxyz";
+    $chave_permite="0123456789abcdefghijklmnopqrstuvwxyz-_.@&=+$,/";
+
 
 //======[ Facilita a criação de select]
 function select($sql,$variaveis)

@@ -173,16 +173,7 @@ Equipe e-licencie
 
 ";
 
-
-                $headers = "MIME-Version: 1.1\r\n";
-                $headers .= "Content-type: text/plain; charset=UTF-8\r\n";
-                $headers .= "From: $meu_email\r\n"; // remetente
-                $headers .= "Return-Path: $meu_email\r\n"; // return-path
-                
-
-
-              mail($email, 'Aprovação de URL curta', $corpo,$headers);
-
+            enviar_email($email,'Aprovação de URL curta',$corpo);
 
             $mensagem="Foi ao e-mail $email um link para aprovação!";
             include "mensagem.php";

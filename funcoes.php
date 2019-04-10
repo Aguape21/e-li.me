@@ -38,7 +38,7 @@ while ($i<count($variaveis))
    $i++;
 }
 
-   //echo $sql;//apaga
+ //  echo ' s['.$sql.'] ';//apaga
 
 $result = $conn->query($sql);
 
@@ -291,6 +291,23 @@ function acesso($url_)
                   $latitude,
                   $longitude]);
 
+}
+
+
+function enviar_email($email, $assunto, $corpo)
+{
+ 
+   global $meu_email;
+   
+                   $headers = "MIME-Version: 1.1\r\n";
+                   $headers .= "Content-type: text/plain; charset=UTF-8\r\n";
+                   $headers .= "From: $meu_email\r\n"; // remetente
+                   $headers .= "Return-Path: $meu_email\r\n"; // return-path
+                   
+   
+   
+                 mail($email, $assunto, $corpo,$headers);
+   
 }
 
 ?>

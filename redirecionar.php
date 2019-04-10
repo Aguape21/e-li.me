@@ -67,6 +67,51 @@ if (($acao==':r:')&&($chave==""))
 
 
 
+//Solicitar link de acesso ao relatório
+if (($acao==':r:')&&($chave!=""))
+{
+    global $secreto,$site;
+
+    $sql = "SELECT id, email FROM `chaves` WHERE chave = '[v0]'";
+    $dd1 = select($sql,[$chave]);
+
+  
+    if (isset($dd1[0]['id']))
+    {
+        $id = $dd1[0]['id'];
+        $email = $dd1[0]['email'];
+
+        $md5 = md5($id.$secreto);
+
+        $corpo =
+        "
+        Olá!
+        
+        Clique no link abaixo para acessar relatórios de acessos de $site/$chave .
+        
+        Ver relatório aqui << $prot$site/aprovacao.php?id=$id&md5=$md5  >>.
+
+        Caso não tenha feito nenhuma solicitação, desconsiderar essa mensagem.
+
+
+        Att,
+        Equipe e-licencie
+
+        
+        ";
+        enviar_email($email,'Link para acesso à relatório.',$corpo);
+
+        $mensagem="Foi ao e-mail castrado um link para acesso ao relatório.";
+        
+        include "mensagem.php";
+          exit;
+
+    }
+
+
+}
+
+
 //Caso não tenha gerado nenhuma URL
 if (($url=="") or ($acao!=""))
 {

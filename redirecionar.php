@@ -5,9 +5,14 @@ $link = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
 $chave_url = substr($link,strlen($site)+1);
 
+
 if(strpos($chave_url,"?")!==false)
 {
-    $chave_url = substr($chave_url,0,strpos($chave_url,"?"));
+    $chave = substr($chave_url,0,strpos($chave_url,"?"));
+}
+else
+{
+    $chave = $chave_url;
 }
 
 $sql = "SELECT url FROM chaves WHERE upper(chave) = upper('[v0]') AND ativo = 1";
@@ -15,7 +20,7 @@ $sql = "SELECT url FROM chaves WHERE upper(chave) = upper('[v0]') AND ativo = 1"
 
 $url="";
 
-$busca = select($sql,[$chave_url]);
+$busca = select($sql,[$chave]);
 
 if(count($busca)!=0)
 {

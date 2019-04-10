@@ -7,15 +7,19 @@ include_once "funcoes.php";
 acesso('');
 
 
+
 if(@$_GET['md5']==md5(@$_GET['id'].$secreto))
 {
+    //pegar dados do acesso
+    $id = $_GET['id'];
+    $sql = "SELECT  url, chave,ativo FROM chaves WHERE id = [v0]";
+    $busca = select($sql,[$id]);
+    $busca = $busca[0];
+    $chave = $busca['chave'];
+    $url = $busca['url'];
+    $ativo = $busca['ativo'];
    
-    //abrir relatório se já estiver ativado
-    $ativo = select("SELECT ativo FROM `chaves` where id = [v0]",
-                    [$_GET['id']]);
-
-    $ativo = $ativo[0]['ativo'];
-
+   
     if ($ativo==1)
     {
         include 'relatorio.php';
@@ -23,14 +27,10 @@ if(@$_GET['md5']==md5(@$_GET['id'].$secreto))
     }
 
 
-   
-    $id = $_GET['id'];
     $sql="UPDATE chaves SET ativo=1,ativado_em=NOW(),sessao_ativado='[v1]' WHERE id = [v0]";
     in_up($sql,[$id,sessao()]);
 
-    $sql = "SELECT  url, chave FROM chaves WHERE id = [v0]";
 
-    $busca = select($sql,[$id]);
 
 }
 else
@@ -51,8 +51,8 @@ else
 
 	<title>Redutor de URL e-licencie</title>
 
-	<link rel="stylesheet" href="assets/demo.css">
-	<link rel="stylesheet" href="assets/form-basic.css">
+	<link rel="stylesheet" href="/assets/demo.css">
+	<link rel="stylesheet" href="/assets/form-basic.css">
 
 </head>
 
@@ -72,12 +72,12 @@ else
             <div class="form-row">
                 <label>
                     <span>Essa é sua nova URL para <?php
-                    global $busca,$site;
-                    echo $busca[0]['url'];
+                    global $url;
+                    echo $url;
                     ?></span>
                     <input value="<?php
-                    global $busca;
-                    echo $prot.$site.'/'.$busca[0]['chave'];
+                    global $chave,$site,$prot;
+                    echo $prot.$site.'/'.$chave;
                     ?>" 
                     type="text">
                 </label>

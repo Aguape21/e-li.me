@@ -207,8 +207,8 @@ Equipe e-licencie
 
 	<title>Redutor de URL e-licencie</title>
 
-	<link rel="stylesheet" href="assets/demo.css">
-	<link rel="stylesheet" href="assets/form-basic.css">
+	<link rel="stylesheet" href="/assets/demo.css">
+	<link rel="stylesheet" href="/assets/form-basic.css">
 
     <script src="https://www.google.com/recaptcha/api.js?render=<?php global $chave_site; echo $chave_site; ?>"></script>
     <script>

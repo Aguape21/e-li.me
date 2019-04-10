@@ -38,7 +38,7 @@ while ($i<count($variaveis))
    $i++;
 }
 
-
+   //echo $sql;//apaga
 
 $result = $conn->query($sql);
 

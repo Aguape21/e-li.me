@@ -2,30 +2,25 @@
 
 include_once "funcoes.php";
 
-$sql = "SELECT
-url,
-chave,
-(SELECT COUNT(id) FROM acessos WHERE acessos.chave = chaves.chave or 
- lower(acessos.chave) LIKE lower(concat(chaves.chave,'?%'))) as conta
-FROM chaves WHERE id = [v0]";
-
-$dados = select($sql,[$_GET['id']]);
-$dados = $dados[0];
-
-
-
-
-
-$sql = "SELECT origem, acesso_em, pais, regiao, cidade, navegador FROM `acessos` WHERE lower(chave) = lower('[v0]') or lower(chave) LIKE lower('[v0]?%') ORDER by acesso_em DESC";
-$acessos = select($sql,[$dados['chave']]);
+if ($chave != "")
+{
+   $sql = "SELECT origem, acesso_em, pais, regiao, cidade, navegador FROM `acessos` WHERE lower(chave) = lower('[v0]') or lower(chave) LIKE lower('[v0]?%') ORDER by acesso_em DESC";
+   $acessos = select($sql,[$chave]);
+}
+else
+{
+   $sql = "SELECT origem, acesso_em, pais, regiao, cidade, 
+   navegador FROM `acessos` WHERE chave = '[v0]' ORDER by acesso_em DESC";
+   $acessos = select($sql,[$url]);
+}
 
 
 
 ?>
 
-<p><strong>URL curta:&nbsp; &nbsp;</strong><?php global $site,$dados; echo $site.'/'.$dados['chave'] ?></p>
-<p><strong>Direciona para:&nbsp; &nbsp;</strong> <?php global $dados; echo $dados['url'] ?></p>
-<p><strong>Quantidade de acessos:&nbsp; &nbsp;</strong> <?php global $dados; echo $dados['conta'] ?></p>
+<p><strong>URL curta:&nbsp; &nbsp;</strong><?php global $site,$chave; echo $site.'/'.$chave; ?></p>
+<p><strong>Direciona para:&nbsp; &nbsp;</strong> <?php global $url; echo $url;?></p>
+<p><strong>Quantidade de acessos:&nbsp; &nbsp;</strong> <?php global $acessos; echo count($acessos); ?></p>
 
 
    <table style="width:100%" border="1px" >

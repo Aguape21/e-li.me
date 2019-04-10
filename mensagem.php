@@ -9,8 +9,8 @@
 
 	<title>Redutor de URL e-licencie</title>
 
-	<link rel="stylesheet" href="assets/demo.css">
-	<link rel="stylesheet" href="assets/form-basic.css">
+	<link rel="stylesheet" href="/assets/demo.css">
+	<link rel="stylesheet" href="/assets/form-basic.css">
 
 </head>
 

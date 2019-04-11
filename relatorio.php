@@ -4,13 +4,12 @@ include_once "funcoes.php";
 
 if ($chave != "")
 {
-   $sql = "SELECT origem, acesso_em, pais, regiao, cidade, navegador FROM `acessos` WHERE lower(chave) = lower('[v0]') or lower(chave) LIKE lower('[v0]?%') ORDER by acesso_em DESC";
+   $sql = "SELECT origem, acesso_em, pais, regiao, cidade, navegador,sessao FROM `acessos` WHERE lower(chave) = lower('[v0]') or lower(chave) LIKE lower('[v0]?%') ORDER by acesso_em DESC";
    $acessos = select($sql,[$chave]);
 }
 else
 {
-   $sql = "SELECT origem, acesso_em, pais, regiao, cidade, 
-   navegador FROM `acessos` WHERE chave = '[v0]' ORDER by acesso_em DESC";
+   $sql = "SELECT origem, acesso_em, pais, regiao, cidade,sessao,navegador FROM `acessos` WHERE chave = '[v0]' ORDER by acesso_em DESC";
    $acessos = select($sql,[$url]);
 }
 
@@ -25,6 +24,7 @@ else
 
    <table style="width:100%" border="1px" >
   <tr>
+  <th><b>Sessão</b></th>
   <th><b>origem</b></th>
   <th><b>acesso em</b></th>
   <th><b>país</b></th>
@@ -37,12 +37,16 @@ else
 
      foreach ($acessos as $acesso) {
       echo '<tr>'.
+            '<th>'.'<img src="https://www.gravatar.com/avatar/'.md5($acesso['sessao']).'?d=monsterid&f=y&s=25">'.'</th>'.    
             '<th>'.$acesso['origem'].'</th>'.
             '<th>'.$acesso['acesso_em'].'</th>'.
             '<th>'.$acesso['pais'].'</th>'.
             '<th>'.$acesso['regiao'].'</th>'.
             '<th>'.$acesso['cidade'].'</th>'.
-            '<th> <xx-small> '.$acesso['navegador'].' </xx-small> </th>'.
+            '<th> <xx-small> '.
+            '<img src="https://www.gravatar.com/avatar/'.md5($acesso['navegador']).'?d=retro&f=y&s=25" style="float:left;" />'.
+            $acesso['navegador'].  
+            ' </xx-small> </th>'.
             '</tr>';
      }
   ?>

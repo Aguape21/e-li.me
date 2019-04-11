@@ -200,8 +200,8 @@ function acesso($url_)
 
       global $site,$geo_api;
 
-      $link = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-      $chave_url = substr($link,strlen($site)+1);
+
+      $chave_url = substr( $_SERVER['REQUEST_URI'], 1 );
       $ip = $_SERVER["REMOTE_ADDR"];
       $navegador = $_SERVER['HTTP_USER_AGENT'];
       $origem = @$_SERVER['HTTP_REFERER'];

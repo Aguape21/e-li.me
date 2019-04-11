@@ -1,9 +1,8 @@
 <?php
 include_once "variaveis.php";
 include_once "funcoes.php";
-$link = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
-$chave_url = substr($link,strlen($site)+1);
+$chave_url = substr( $_SERVER['REQUEST_URI'], 1 );
 
 
 //remover ação
@@ -115,7 +114,7 @@ if (($acao==':r:')&&($chave!=""))
 //Caso não tenha gerado nenhuma URL
 if (($url=="") or ($acao!=""))
 {
-    $mensagem = "Não encontramos nada em $link";
+    $mensagem = "Não encontramos nada em $site/$chave_url";
     include "mensagem.php";
     exit;
 }

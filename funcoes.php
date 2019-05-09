@@ -314,4 +314,25 @@ function enviar_email($email, $assunto, $corpo)
    
 }
 
+
+function id_navegadores()
+{
+   $user_a = $_SERVER['HTTP_USER_AGENT'];
+ 
+
+   $sql = "SELECT nav.id_navegadores as id FROM navegadores nav WHERE nav.user_agent = '[v0]'";
+
+   $r = select($sql,[$user_a]);
+
+   if (count($r) > 0)
+   {
+      $saida = $r[0]['id'];
+   }
+   else
+   {
+      
+   }
+
+}
+
 ?>

@@ -114,6 +114,7 @@ if (($acao==':r:')&&($chave!=""))
 //Caso não tenha gerado nenhuma URL
 if (($url=="") or ($acao!=""))
 {
+    header("HTTP/1.0 404 Not Found");
     $mensagem = "Não encontramos nada em $site/$chave_url";
     include "mensagem.php";
     exit;

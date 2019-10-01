@@ -1,4 +1,6 @@
 <?php
+ ob_start();
+
 include_once "variaveis.php";
 include_once "funcoes.php";
 
